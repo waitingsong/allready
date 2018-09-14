@@ -1,27 +1,30 @@
 {
-  "name": "npm-base",
+  "name": "allready",
   "author": "waiting",
   "version": "0.0.1",
-  "description": "npm boilerplate",
+  "description": "A lightweight remote api ECMAScript test framework for Node.js",
   "keywords": [
+    "fetch",
+    "node-fetch",
+    "rxjs",
+    "test",
     "typescript"
   ],
   "engines": {
     "node": ">=8.10.0"
   },
-  "bin": {},
   "browser": "",
   "es2015": "./dist/index.esm.js",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/waitingsong/npm-base/issues"
+    "url": "https://github.com/waitingsong/allready/issues"
   },
-  "homepage": "https://github.com/waitingsong/npm-base#readme",
+  "homepage": "https://github.com/waitingsong/allready#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/waitingsong/npm-base.git"
+    "url": "git+https://github.com/waitingsong/allready.git"
   },
   "license": "MIT",
   "nyc": {
@@ -44,7 +47,16 @@
     "all": true
   },
   "dependencies": {
-    "rxjs": ">=6.2.0"
+    "@types/form-data": "*",
+    "@types/node-fetch": "*",
+    "@types/qs": "*",
+    "abortcontroller-polyfill": "^1.1.9",
+    "form-data": "^2.3.2",
+    "node-fetch": "^2.1.2",
+    "qs": "^6.5.2",
+    "rxjs": ">=6.2.0",
+    "rxwalker": "^2.2.0",
+    "rxxfetch": "^1.8.0"
   },
   "devDependencies": {
     "@types/mocha": "*",

@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "description": "A lightweight remote api ECMAScript test framework for Node.js",
   "keywords": [
+    "api",
+    "walker",
     "fetch",
     "node-fetch",
     "rxjs",

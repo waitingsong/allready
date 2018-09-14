@@ -5,8 +5,9 @@ import { Config, TestResult, TestSuite } from './model'
 
 const cpuCount = cpus().length
 
-export const initConfig: Config = {
+export const initialConfig: Config = {
   loadConcurrent: cpuCount > 2 ? cpuCount : 2,
+  urlPrefix: 'http://',
 }
 
 export const initialTestSuite: Required<TestSuite> = {

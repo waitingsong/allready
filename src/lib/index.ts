@@ -4,8 +4,8 @@ import { empty, from as ofrom, isObservable, of, throwError, Observable } from '
 import { catchError, concatMap, map, pluck } from 'rxjs/operators'
 import { fetch, setGloalRequestInit, JsonType, ObbRetType, RxRequestInit } from 'rxxfetch'
 
-import { initialTestResult } from './config'
-import { RunAssertOpts, RunSuite, RunUnit, TestResult, UnitStatus } from './model'
+import { initialConfig, initialTestResult } from './config'
+import { Config, RunAssertOpts, RunSuite, RunUnit, TestResult, UnitStatus } from './model'
 import { loadDirOrFile, parseInput } from './util'
 
 
@@ -79,16 +79,38 @@ export function startUnit(runUnit: RunUnit) {
 }
 
 
+/** Return copy of Config */
+export function getConfig(): Config {
+  return { ...initialConfig }
+}
+
+
+/** Set Config and return copy of Config */
+export function setConfig(config: Partial<Config>): Config {
+  for (const [key, value] of Object.entries(config)) {
+    Object.defineProperty(initialConfig, key, {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value,
+    })
+  }
+  return getConfig()
+}
+
+
 function sendRequest(runUnit: RunUnit): Observable<ObbRetType> {
+  const config = getConfig()
   const { url, method, payload } = runUnit
   const { data, respPluck } = payload
   const reqData$ = parseInput(data)
   const args: RxRequestInit = { method, ...payload.args }
+  const reqUrl = config.urlPrefix ? config.urlPrefix + url : url
 
   let req$ = reqData$.pipe(
     concatMap(res => {
       args.data = res
-      return fetch<ObbRetType>(url, args)
+      return fetch<ObbRetType>(reqUrl, args)
     }),
   )
 

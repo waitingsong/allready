@@ -6,7 +6,7 @@ import { JsonType, RxRequestInit } from 'rxxfetch'
 
 import { basename, normalize, pathResolve } from '../shared/index'
 
-import { initialTestSuite, initConfig } from './config'
+import { initialConfig, initialTestSuite } from './config'
 import { RunSuite, TestSuite, UnitPayload, UnitStatus } from './model'
 
 
@@ -31,7 +31,7 @@ export function loadDirOrFile(path: string): Observable<RunSuite> {
             }
           }),
         )
-      }, initConfig.loadConcurrent),
+      }, initialConfig.loadConcurrent),
       reduce((acc: Set<RunSuite>, curr: RunSuite) => {
         acc.add(curr)
         return acc

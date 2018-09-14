@@ -2,6 +2,7 @@ import { Observable } from 'rxjs'
 import { Filepath } from 'rxwalker'
 import { JsonType, ObbRetType, RxRequestInit } from 'rxxfetch'
 
+
 export const enum UnitStatus {
   'normal', 'skip', 'only',
 }
@@ -20,15 +21,21 @@ export interface TestResult {
 export interface TestSuite {
   /** Whether exit with first failure. Default: false */
   bail?: boolean
+
   /** Default: 'GET' */
   method?: NonNullable<RxRequestInit['method']>
+
   /** Name of test case */
   readonly name: string
+
   /** URL of remote API */
   readonly url: string
+
   payload: UnitPayload | UnitPayload[] | null
+
   /** Whether skip this suite or only this suite. Default:normal */
   status?: keyof typeof UnitStatus
+
   /** Default: 60*1000ms */
   timeout?: number
 }
@@ -61,4 +68,7 @@ export interface RunAssertOpts {
 export interface Config {
   /** Concurrent number of loading files. Default:os.cpu() at least 2 */
   loadConcurrent: number
+
+  /** Prefix for TestSuite['url']. Default:http:// */
+  urlPrefix: string
 }

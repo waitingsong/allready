@@ -1,7 +1,7 @@
 {
   "name": "allready",
   "author": "waiting",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A lightweight remote api ECMAScript test framework for Node.js",
   "keywords": [
     "api",

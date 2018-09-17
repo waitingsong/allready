@@ -54,7 +54,7 @@ export interface UnitPayload {
   args?: RxRequestInit
   data?: RxRequestInit['data'] | Observable<RxRequestInit['data']>
   callback?: AssertCallback
-  expect: JsonType | Observable<JsonType>
+  expect?: JsonType | Observable<JsonType>
   respPluck?: string[]
 }
 

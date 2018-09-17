@@ -146,15 +146,11 @@ function runAssert(options: RunAssertOpts): Observable<RunUnit> {
   const { respData, runUnit } = options
   const { expect, callback } = runUnit.payload
 
-  if (!expect) {
-    return empty()
-  }
-
   if (typeof callback === 'function') {
     callback(respData)
   }
 
-  const ret$ = isObservable(expect)
+  const ret$ = expect && isObservable(expect)
     ? expectObservable(respData, expect)
     : expectNormal(respData, expect)
 
@@ -165,22 +161,27 @@ function runAssert(options: RunAssertOpts): Observable<RunUnit> {
 
 
 function expectObservable(respData: ObbRetType, expect: Observable<JsonType>): Observable<void> {
-  if (isObservable(expect)) {
+  if (expect && isObservable(expect)) {
     const ret$ = expect.pipe(
       concatMap(res => expectNormal(respData, res)),
     )
     return ret$
   }
   else {
-    throw TypeError('"expect" invalid')
+    throw TypeError('"expect" not valid Observable')
   }
 }
 
 
-function expectNormal(respData: ObbRetType, expect: JsonType) {
-  if (!expect) {
-    throw TypeError('"expect" invalid')
+function expectNormal(respData: ObbRetType, expect: any) {
+  if (typeof expect === 'undefined') {
+    return of(void 0)
   }
+
+  if (respData === expect) {
+    return of(void 0)
+  }
+
   try {
     assert.deepStrictEqual(respData, expect)
     return of(void 0)

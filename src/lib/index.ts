@@ -1,11 +1,11 @@
 import * as assert_ from 'assert'
 import nodefetch, { Headers } from 'node-fetch'
-import { empty, from as ofrom, isObservable, of, throwError, Observable } from 'rxjs'
+import { empty, from as ofrom, isObservable, merge, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, map, pluck } from 'rxjs/operators'
 import { fetch, setGloalRequestInit, JsonType, ObbRetType, RxRequestInit } from 'rxxfetch'
 
 import { initialConfig, initialTestResult } from './config'
-import { Config, RunAssertOpts, RunSuite, RunUnit, TestResult, UnitStatus } from './model'
+import { Config, RunAssertOpts, RunSuite, RunUnit, TestResult, UnitPayload, UnitStatus } from './model'
 import { loadDirOrFile, parseInput } from './util'
 
 
@@ -146,17 +146,33 @@ function runAssert(options: RunAssertOpts): Observable<RunUnit> {
   const { respData, runUnit } = options
   const { expect, callback } = runUnit.payload
 
-  if (typeof callback === 'function') {
-    callback(respData)
-  }
-
-  const ret$ = expect && isObservable(expect)
+  const cb$ = expectCallback(respData, callback)
+  const data$ = expect && isObservable(expect)
     ? expectObservable(respData, expect)
     : expectNormal(respData, expect)
 
-  return ret$.pipe(
+  const ret$ = merge(cb$, data$).pipe(
     map(() => runUnit),
   )
+  return ret$
+}
+
+
+function expectCallback(respData: ObbRetType, callback: UnitPayload['callback']): Observable<void> {
+  if (! callback) {
+    return of(void 0)
+  }
+  else if (typeof callback !== 'function') {
+    return throwError(new TypeError('callbak not a Function'))
+  }
+
+  try {
+    const ret = callback(respData)
+    return ret && isObservable(ret) ? ret : of(void 0)
+  }
+  catch (ex) {
+    return throwError(ex)
+  }
 }
 
 

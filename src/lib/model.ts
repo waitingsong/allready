@@ -58,7 +58,8 @@ export interface UnitPayload {
   respPluck?: string[]
 }
 
-export type AssertCallback = (respData: ObbRetType) => void
+export type AssertCallback = (respData: ObbRetType) => void | Observable<void>
+
 export interface RunAssertOpts {
   respData: ObbRetType
   readonly runUnit: RunUnit

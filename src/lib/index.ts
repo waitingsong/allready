@@ -2,7 +2,7 @@ import * as assert_ from 'assert'
 import nodefetch, { Headers } from 'node-fetch'
 import { empty, forkJoin, from as ofrom, isObservable, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, map, pluck } from 'rxjs/operators'
-import { fetch, setGloalRequestInit, JsonType, ObbRetType, RxRequestInit } from 'rxxfetch'
+import { fetch, setGloalRequestInit, ObbRetType, RxRequestInit } from 'rxxfetch'
 
 import { initialConfig, initialTestResult } from './config'
 import { Config, RunAssertOpts, RunSuite, RunUnit, TestResult, UnitPayload, UnitStatus } from './model'
@@ -176,10 +176,10 @@ function expectCallback(respData: ObbRetType, callback: UnitPayload['callback'])
 }
 
 
-function expectObservable(respData: ObbRetType, expect: Observable<JsonType>): Observable<void> {
+function expectObservable(respData: ObbRetType, expect: Observable<any>): Observable<void> {
   if (expect && isObservable(expect)) {
     const ret$ = expect.pipe(
-      concatMap(res => expectNormal(respData, res)),
+      concatMap((res: any) => expectNormal(respData, res)),
     )
     return ret$
   }

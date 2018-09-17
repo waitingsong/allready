@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 import { Filepath } from 'rxwalker'
-import { JsonType, ObbRetType, RxRequestInit } from 'rxxfetch'
+import { ObbRetType, RxRequestInit } from 'rxxfetch'
 
 
 export const enum UnitStatus {
@@ -49,16 +49,16 @@ export interface RunUnit extends RunSuite {
   payload: UnitPayload
 }
 
-export interface UnitPayload {
+export interface UnitPayload <T extends ObbRetType = any> {
   /** args.data will override by TestUnit.data */
   args?: RxRequestInit
   data?: RxRequestInit['data'] | Observable<RxRequestInit['data']>
-  callback?: AssertCallback
-  expect?: JsonType | Observable<JsonType>
+  callback?: AssertCallback<T>
+  expect?: T | Observable<T>
   respPluck?: string[]
 }
 
-export type AssertCallback = (respData: ObbRetType) => void | Observable<void>
+export type AssertCallback <T> = (respData: T) => void | Observable<void>
 
 export interface RunAssertOpts {
   respData: ObbRetType

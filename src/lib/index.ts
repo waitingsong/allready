@@ -1,7 +1,7 @@
 import * as assert_ from 'assert'
 import nodefetch, { Headers } from 'node-fetch'
 import { empty, forkJoin, from as ofrom, isObservable, of, throwError, Observable } from 'rxjs'
-import { catchError, concatMap, map, pluck } from 'rxjs/operators'
+import { catchError, concatMap, map, mapTo, pluck } from 'rxjs/operators'
 import { fetch, setGloalRequestInit, ObbRetType, RxRequestInit } from 'rxxfetch'
 
 import { initialConfig, initialTestResult } from './config'
@@ -152,7 +152,7 @@ function runAssert(options: RunAssertOpts): Observable<RunUnit> {
     : expectNormal(respData, expect)
 
   const ret$ = forkJoin(cb$, data$).pipe(
-    map(() => runUnit),
+    mapTo(runUnit),
   )
   return ret$
 }

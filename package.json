@@ -58,7 +58,7 @@
     "qs": "^6.5.2",
     "rxjs": ">=6.2.0",
     "rxwalker": "^2.2.0",
-    "rxxfetch": "^1.8.0"
+    "rxxfetch": "^1.10.0"
   },
   "devDependencies": {
     "@types/mocha": "*",

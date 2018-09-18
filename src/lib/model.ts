@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 import { Filepath } from 'rxwalker'
-import { ObbRetType, RxRequestInit } from 'rxxfetch'
+import { Args, ObbRetType, RxRequestInit } from 'rxxfetch'
 
 
 export const enum UnitStatus {
@@ -52,7 +52,7 @@ export interface RunUnit extends RunSuite {
 export interface UnitPayload <T extends ObbRetType = any> {
   /** args.data will override by TestUnit.data */
   args?: RxRequestInit
-  data?: RxRequestInit['data'] | Observable<RxRequestInit['data']>
+  data?: Args['data'] | Observable<Args['data']>
   callback?: AssertCallback<T>
   expect?: T | Observable<T>
   respPluck?: string[]
@@ -67,6 +67,9 @@ export interface RunAssertOpts {
 
 
 export interface Config {
+  /** Append to every request */
+  cookies: Args['cookies']
+
   /** Concurrent number of loading files. Default:os.cpu() at least 2 */
   loadConcurrent: number
 

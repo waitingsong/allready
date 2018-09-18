@@ -104,8 +104,12 @@ function sendRequest(runUnit: RunUnit): Observable<ObbRetType> {
   const { url, method, payload } = runUnit
   const { data, respPluck } = payload
   const reqData$ = parseInput(data)
-  const args: RxRequestInit = { method, ...payload.args }
   const reqUrl = config.urlPrefix ? config.urlPrefix + url : url
+  const args: RxRequestInit = {
+    method,
+    cookies: config.cookies,
+    ...payload.args,
+  }
 
   let req$ = reqData$.pipe(
     concatMap(res => {

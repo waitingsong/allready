@@ -2,7 +2,7 @@
   "name": "allready",
   "author": "waiting",
   "version": "0.5.1",
-  "description": "A lightweight remote api ECMAScript test framework for Node.js",
+  "description": "A lightweight http api ECMAScript test framework for Node.js",
   "keywords": [
     "api",
     "walker",

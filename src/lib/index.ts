@@ -1,6 +1,6 @@
 import * as assert_ from 'assert'
 import nodefetch, { Headers } from 'node-fetch'
-import { empty, forkJoin, from as ofrom, isObservable, of, throwError, Observable } from 'rxjs'
+import { forkJoin, from as ofrom, isObservable, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, map, mapTo, pluck } from 'rxjs/operators'
 import { fetch, setGloalRequestInit, ObbRetType, RxRequestInit } from 'rxxfetch'
 
@@ -60,7 +60,7 @@ export function startUnit(runUnit: RunUnit) {
   assert(runUnit.url)
   assert(runUnit.payload)
   if (!runUnit.payload) {
-    return empty()
+    throw new TypeError('Value of payload is void')
   }
 
   const req$ = sendRequest(runUnit)

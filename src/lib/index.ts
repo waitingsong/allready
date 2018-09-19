@@ -35,10 +35,11 @@ export function startSuite(mod: RunSuite) {
   if (Array.isArray(payload)) {
     const ret$ = ofrom(payload).pipe(
       map(row => {
-        return <RunUnit> {
+        const ret: RunUnit = {
           ...mod,
           payload: row,
         }
+        return ret
       }),
       concatMap(startUnit),
     )

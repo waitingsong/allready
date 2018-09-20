@@ -49,7 +49,7 @@ export interface RunUnit extends RunSuite {
   payload: UnitPayload
 }
 
-export interface UnitPayload <T extends ObbRetType = any> {
+export interface UnitPayload <T = any> {
   /** args.data will override by TestUnit.data */
   args?: RxRequestInit
   data?: Args['data'] | Observable<Args['data']>

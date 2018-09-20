@@ -144,6 +144,7 @@ function handleResult(unit: RunUnit, error: TestResult['error'] = null): TestRes
     status,
     filePath: unit.filePath,
     suiteName: unit.name,
+    unitName: unit.payload.name ? unit.payload.name : Math.random().toString().slice(2),
   }
 
   return ret

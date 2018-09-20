@@ -26,4 +26,5 @@ export const initialTestResult: TestResult = {
   filePath: '',
   status: 'unknown',
   suiteName: '',
+  unitName: '',
 }

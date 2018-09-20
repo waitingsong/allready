@@ -34,7 +34,10 @@ export function startSuite(mod: RunSuite) {
 
   if (Array.isArray(payload)) {
     const ret$ = ofrom(payload).pipe(
-      map(row => {
+      map((row, index) => {
+        if (typeof row.name === 'undefined' || row.name === '') {
+          row.name = index + ''
+        }
         const unit: RunUnit = {
           ...mod,
           payload: row,
@@ -45,7 +48,7 @@ export function startSuite(mod: RunSuite) {
     )
     return ret$
   }
-  else if (typeof payload === 'object') {
+  else if (typeof payload === 'object' && payload) {
     return startUnit(<RunUnit> mod)
   }
   else {

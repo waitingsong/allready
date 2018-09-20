@@ -16,6 +16,7 @@ export interface TestResult {
   filePath: RunUnit['filePath']
   status: keyof typeof RetStatus
   suiteName: RunUnit['name']
+  unitName: NonNullable<UnitPayload['name']>
 }
 
 export interface TestSuite {
@@ -25,7 +26,7 @@ export interface TestSuite {
   /** Default: 'GET' */
   method?: NonNullable<RxRequestInit['method']>
 
-  /** Name of test case */
+  /** Name of test suite */
   readonly name: string
 
   /** URL of remote API */
@@ -55,6 +56,8 @@ export interface UnitPayload <T = any> {
   data?: Args['data'] | Observable<Args['data']>
   callback?: AssertCallback<T>
   expect?: T | Observable<T>
+  /** Name of test case. be string of index of payload if omit */
+  name?: string
   respPluck?: string[]
 }
 

@@ -36,7 +36,7 @@ export function startSuite(mod: RunSuite) {
     const ret$ = ofrom(payload).pipe(
       map((row, index) => {
         if (typeof row.name === 'undefined' || row.name === '') {
-          row.name = index + ''
+          row.name = index + 1 + ''
         }
         const unit: RunUnit = {
           ...mod,
